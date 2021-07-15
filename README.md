@@ -10,6 +10,11 @@
 
    - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/linked-list.md)
    - [source](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/src/linked-list.js)
+   
+2. ### Doubly Linked List
+
+   - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/doubly-linked-list.md)
+   - [source](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/src/doubly-linked-list.js)
 
 <br>
 
