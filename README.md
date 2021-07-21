@@ -20,6 +20,11 @@
 
    - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/queue.md)
    - [source](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/src/queue.js)
+   
+4. ### Stack
+
+   - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/stack.md)
+   - [source](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/src/stack.js)
 
 <br>
 
