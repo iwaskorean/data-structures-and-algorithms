@@ -25,6 +25,11 @@
 
    - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/stack.md)
    - [source](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/src/stack.js)
+   
+5. ### Hash Table
+
+   - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/hash-table.md)
+   - source
 
 <br>
 
