@@ -8,7 +8,7 @@ class Stack {
   }
 
   pop() {
-    if (this.items.length == 0) return -1;
+    if (this.items.length === 0) return -1;
     return this.items.pop();
   }
 
@@ -16,7 +16,11 @@ class Stack {
     return this.items[this.items.length - 1];
   }
 
+  getSize() {
+    return this.items.length;
+  }
+
   isEmpty() {
-    return this.items.length == 0;
+    return this.items.length === 0;
   }
 }

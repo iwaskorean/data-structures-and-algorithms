@@ -42,18 +42,28 @@ push(element) {
 
 ```javascript
 pop() {
-  if (this.items.length == 0) return -1;
+  if (this.items.length === 0) return -1;
   return this.items.pop();
 }
 ```
 
 #### peek
 
-스택에 가장 첫번째 위치한 항목을 반환하는 함수이다.
+스택에 가장 상단에 위치한(top) 항목을 반환하는 함수이다.
 
 ```javascript
 peek() {
   return this.items[this.items.length - 1];
+}
+```
+
+#### getSize
+
+스택에 존재하는 항목의 갯수를 반환하는 함수이다.
+
+```javascript
+getSize() {
+  return this.items.length;
 }
 ```
 
@@ -63,7 +73,7 @@ peek() {
 
 ```javascript
 isEmpty() {
-  return this.items.length == 0;
+  return this.items.length === 0;
 }
 ```
 
@@ -82,7 +92,7 @@ class Stack {
   }
 
   pop() {
-    if (this.items.length == 0) return -1;
+    if (this.items.length === 0) return -1;
     return this.items.pop();
   }
 
@@ -90,8 +100,12 @@ class Stack {
     return this.items[this.items.length - 1];
   }
 
+  getSize() {
+    return this.items.length;
+  }
+
   isEmpty() {
-    return this.items.length == 0;
+    return this.items.length === 0;
   }
 }
 
@@ -104,32 +118,36 @@ class Stack {
 ```javascript
 const stack = new Stack();
 
-stack.isEmpty(); // *
+stack.isEmpty(); // *1
 
 stack.push(0);
 stack.push(1);
 stack.push(2);
 stack.push('Hello');
 
-stack.peek(); // *
+stack.getSize(); // *2
 
-stack.pop(); // *
-stack.pop(); // *
-stack.pop(); // *
-stack.pop(); // *
+stack.peek(); // *3
 
-stack.isEmpty(); // *
+stack.pop(); // *4
+stack.pop(); // *5
+stack.pop(); // *6
+stack.pop(); // *7
+
+stack.isEmpty(); // *8
 ```
 
 ```javascript
 // output: 
-true
-0
-"Hello"
-2
-1
-0
-true
+
+true // *1
+4 // *2
+"Hello" // *3
+"Hello" // *4
+2 // *5
+1 // *6
+0 // *7
+true // *8
 ```
 
 <br>
