@@ -29,7 +29,7 @@
 5. ### Hash Table
 
    - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/hash-table.md)
-   - source
+   - [source](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/src/hash-table.js)
 
 <br>
 
