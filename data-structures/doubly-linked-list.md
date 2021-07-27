@@ -22,7 +22,7 @@
 
 ### Node
 
-이중 연결 리스트의 `Node` 클래스는 이전/다음 노드를 가르키는 `next`, `previous` 프로퍼티와 `data` 프로퍼티로 구성된다.
+이중 연결 리스트의 `Node` 클래스는 이전/다음 노드를 가르키는 `next`, `previous` 프로퍼티와 `data` 프로퍼티로 구성된다.
 
 ```javascript
 class DoublyLinkedListNode {
@@ -55,7 +55,7 @@ class DoublyLinkedList {
 
 #### add(data)
 
-새로운 요소를 추가하는 내부 함수이다. 비어있는 이중 연결 리스트에 새로운 요소를 추가하는 경우 `this[head]`과  `this[tail]`이 동일한 노드로 설정된다.
+새로운 요소를 추가하는 메소드이다. 비어있는 이중 연결 리스트에 새로운 요소를 추가하는 경우 `this[head]`과  `this[tail]`이 동일한 노드로 설정된다.
 
 ```javascript
 class DoublyLinkedList {
@@ -85,7 +85,7 @@ class DoublyLinkedList {
 
 #### get(index)
 
-특정 인덱스의 요소를 반환하는 함수이다.
+특정 인덱스의 요소를 반환하는 메소드이다.
 
 ```javascript
 class DoublyLinkedList {
@@ -116,7 +116,7 @@ class DoublyLinkedList {
 
 #### remove(index)
 
-특정 인덱스의 요소를 제거하는 함수이다.
+특정 인덱스의 요소를 제거하는 메소드이다.
 
 ```javascript
 class DoublyLinkedList {
@@ -181,7 +181,7 @@ class DoublyLinkedList {
 
 #### Reverse iterator
 
-리스트를 역방향으로 순회하기 위한 함수이다.
+리스트를 역방향으로 순회하기 위한 메소드이다.
 
 ```javascript
 class DoublyLinkedList {
@@ -311,7 +311,7 @@ class DoublyLinkedList {
 
 ### Example
 
-이중 연결 리스트에 요소를 삽입/삭제/역방향순회/조회하는 예제이다.
+이중 연결 리스트에 요소를 삽입/삭제/역방향순회/조회하는 예제이다.
 
 ```javascript
 const list = new DoublyLinkedList();

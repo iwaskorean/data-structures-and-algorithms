@@ -76,7 +76,7 @@ class LinkedList {
 
 #### add(element)
 
-리스트 끝에 새로운 요소를 추가하는 함수이다.
+리스트 끝에 새로운 요소를 추가하는 메소드이다.
 
 만약 리스트가 비어있을 경우 추가되는 요소가 헤드가 되며 리스트가 비어있지 않은 경우에는 리스트 끝에 요소를 추가한다.
 
@@ -107,7 +107,7 @@ add(element)
 
 #### InsertAt(element, index)
 
-리스트내의 특정 인덱스에 요소를 삽입(중간 삽입)하는 함수이다.
+리스트내의 특정 인덱스에 요소를 삽입(중간 삽입)하는 메소드이다.
 
 ```javascript
 insertAt(element, index)
@@ -147,7 +147,7 @@ insertAt(element, index)
 
 #### removeFrom(index)
 
-리스트내의 특정 인덱스의 요소를 제거 후 반환하는 함수이다.
+리스트내의 특정 인덱스의 요소를 제거 후 반환하는 메소드이다.
 
 삭제 시 아래와 같은 3가지 조건에 따라 삭제가 실시된다.
 
@@ -189,7 +189,7 @@ removeFrom(index)
 
 #### removeElement(element)
 
-리스트에서 특정 요소를 제거하는 함수이다. 제거할 요소를 찾지 못할 경우 -1을 반환한다.
+리스트에서 특정 요소를 제거하는 메소드이다. 제거할 요소를 찾지 못할 경우 -1을 반환한다.
 
 ```javascript
 removeElement(element)
