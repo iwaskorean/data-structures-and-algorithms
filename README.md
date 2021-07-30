@@ -34,7 +34,7 @@
 6. ### Heap
 
    - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/heap.md)
-   - source
+   - [source](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/src/binary-heap.js)
 
 <br>
 
