@@ -2,20 +2,9 @@
 
 큐(queue)란 사람들이 줄을 서는 것처럼 순차적이고 순서가 있는 자료구조이다. 줄에서 먼저 기다리고 있던 사람이 먼저 나가는 것과 같은 선입선출(FIFO, First In First Out) 원칙을 따른다.
 
-![q](https://dmitripavlutin.com/2e1aee372cae31a13b0809df4ac606ff/queue-12.svg)
+![queue](https://www.javascripttutorial.net/wp-content/uploads/2016/08/JavaScript-Queue-Illustration.png)
 
-큐에 새로운 데이터가 들어오는(enqueue) 위치를 테일, 데이터를 삭제, 출력(dequeue)할 때 대상이 되는 위치를 헤드라고 한다.
-
-<br>
-
-### The operations on Queue
-
-큐에서 이루어지는 작업들은 다음과 같다.
-
-- enqueue : 큐의 가장 뒤 위치에 항목을 삽입한다. 삽입된 항목은 큐의 테일이 된다.
-- dequeue : 큐의 가장 앞 항목을 추출한다. 추출된 항목의 다음 항목이 헤드가 된다.
-- peek : 큐의 헤드를 읽는다. 
-- length : 큐에 포함된 항목의 수를 계산한다.
+큐에 enqueue(새로운 요소 삽입)되는 위치를 back, dequeue(요소 제거)되는 위치를 front라고 한다.
 
 <br>
 
@@ -23,65 +12,78 @@
 
 ### Queue
 
-큐는 데이터를 가지고 있는 객체인 `item`,  헤드의 인덱스를 나타내는 `head`, 테일의 인덱스를 나타내는 `tail` 프로퍼티를 가진다.
+큐는 배열을 사용해 구현할 수 있다.
 
 ```javascript
 class Queue {
   constructor() {
-    this.items = {};
-    this.headIndex = 0;
-    this.tailIndex = 0;
+    this.items = [];
   }
 
-  // enqueue(item) 
+  // enqueue(element) 
   // dequeue() 
-  // peek()
-  // length()
-
+  // front()
+  // rear()
+  // size() 
+  // print()
+  }
 }
 ```
 
 #### Enqueue
 
-테일 위치에 새로운 항목을 추가하며 테일의 인덱스를 하나 증가시키는 메소드이다.
+`enqueue()`는 큐의 가장 마지막 위치, 즉 back에 새로운 요소를 삽입하는 메소드이다.
 
 ```javascript
-enqueue(item) {
-    this.items[this.tailIndex] = item;
-    this.tailIndex++;
+enqueue(element) {
+  this.items.push(element);
 }
 ```
 
 #### Dequeue
 
-헤드 위치에 항목을 반환하고 헤드의 인덱스를 하나 증가시키는 메소드이다.
+`dequeue()`는 큐의 가장 첫 번째 위치, 즉 front에 위치한 요소를 제거후 반환하는 메소드이다.
 
 ```javascript
 dequeue() {
-    const item = this.items[this.headIndex];
-    delete this.items[this.headIndex];
-    this.headIndex++;
-    return item;
+  return this.items.shift();
 }
 ```
 
-#### Peek
+#### front, rear
 
-큐의 현재 헤드 위치에 항목을 반환하는 메소드이다.
+`front()`는 큐의 front에 위치한 요소를, `rear()`는 큐의 back에 위치한 요소를 반환하는 메소드이다.
 
 ```javascript
-peek() {
-  return this.items[this.headIndex];
+front() {
+  return this.items[0];
+}
+
+rear() {
+  return this.items[this.items.length - 1];
 }
 ```
 
-#### Length
+#### size
 
-현재 큐의 항목 갯수 즉, 큐의 길이를 반환하는 메소드이다.
+`size()`는 큐의 크기를 반환하는 메소드이다. 만약 큐가 비어있을경우 메시지를 반환한다.
 
 ```javascript
-length() {
-	return this.tailIndex - this.headIndex;
+size() {
+  return this.items.length ? this.items.length : 'It is Empty!!';
+}
+```
+
+#### print
+
+`print()`는 큐의 요소들을 콘솔에 출력하는 메소드이다.
+
+```javascript
+print() {
+  console.log('Index : Element');
+  for (let i = 0; i < this.items.length; i++) {
+    console.log(`${i} : ${this.items[i]}`);
+  }
 }
 ```
 
@@ -92,29 +94,34 @@ length() {
 ```javascript
 class Queue {
   constructor() {
-    this.items = {};
-    this.headIndex = 0;
-    this.tailIndex = 0;
+    this.items = [];
   }
 
-  enqueue(item) {
-    this.items[this.tailIndex] = item;
-    this.tailIndex++;
+  enqueue(element) {
+    this.items.push(element);
   }
 
   dequeue() {
-    const item = this.items[this.headIndex];
-    delete this.items[this.headIndex];
-    this.headIndex++;
-    return item;
+    return this.items.shift();
   }
 
-  peek() {
-    return this.items[this.headIndex];
+  front() {
+    return this.items[0];
   }
 
-  length() {
-    return this.tailIndex - this.headIndex;
+  rear() {
+    return this.items[this.items.length - 1];
+  }
+
+  size() {
+    return this.items.length ? this.items.length : 'It is Empty!!';
+  }
+
+  print() {
+    console.log('Index : Element');
+    for (let i = 0; i < this.items.length; i++) {
+      console.log(`${i} : ${this.items[i]}`);
+    }
   }
 }
 ```
@@ -124,22 +131,32 @@ class Queue {
 ### Example
 
 ```javascript
-const queue = new Queue();
+const q = new Queue();
 
-queue.enqueue(10);
-queue.enqueue(2);
-queue.enqueue(5);
-queue.enqueue(999);
+q.enqueue(10);
+q.enqueue(2);
+q.enqueue(5);
+q.enqueue(999);
 
-queue.dequeue(); 
-queue.peek();    
-queue.length(); 
+q.print();
+q.dequeue();
+q.front();
+q.rear();
+q.size();
 ```
 
 ```javascript
 // output:
+
+Index : Element
+0 : 10
+1 : 2
+2 : 5
+3 : 999
+
 10
 2
+999
 3
 ```
 
@@ -151,4 +168,4 @@ queue.length();
 
 **Reference**
 
-- [How to Implement a Queue in JavaScript](https://dmitripavlutin.com/javascript-queue/)
+- [JavaScript Queue](https://www.javascripttutorial.net/javascript-queue/)

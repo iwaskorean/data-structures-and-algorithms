@@ -1,27 +1,32 @@
 class Queue {
   constructor() {
-    this.items = {};
-    this.headIndex = 0;
-    this.tailIndex = 0;
+    this.items = [];
   }
 
-  enqueue(item) {
-    this.items[this.tailIndex] = item;
-    this.tailIndex++;
+  enqueue(element) {
+    this.items.push(element);
   }
 
   dequeue() {
-    const item = this.items[this.headIndex];
-    delete this.items[this.headIndex];
-    this.headIndex++;
-    return item;
+    return this.items.shift();
   }
 
-  peek() {
-    return this.items[this.headIndex];
+  front() {
+    return this.items[0];
   }
 
-  length() {
-    return this.tailIndex - this.headIndex;
+  rear() {
+    return this.items[this.items.length - 1];
+  }
+
+  size() {
+    return this.items.length ? this.items.length : 'It is Empty!!';
+  }
+
+  print() {
+    console.log('Index : Element');
+    for (let i = 0; i < this.items.length; i++) {
+      console.log(`${i} : ${this.items[i]}`);
+    }
   }
 }
