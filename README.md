@@ -35,6 +35,11 @@
 
    - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/heap.md)
    - [source](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/src/binary-heap.js)
+   
+7. ### Priority Queue
+
+   - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/priority-queue.md)
+   - [source](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/src/priority-queue.js)
 
 <br>
 
