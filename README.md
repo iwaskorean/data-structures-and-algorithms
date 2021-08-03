@@ -40,6 +40,11 @@
 
    - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/priority-queue.md)
    - [source](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/src/priority-queue.js)
+   
+8. ### Trie
+
+   - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/trie.md)
+   - source
 
 <br>
 
