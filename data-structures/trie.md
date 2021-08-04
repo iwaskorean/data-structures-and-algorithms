@@ -12,7 +12,7 @@
 
 ### Trie Node
 
-트라이 노드 객체는 `key`, 부모/자식 노드를 참조하는 `parent`와 `children`, 노드가 문자열의 마지막에 위치해있는가를 나타내는 `end`를 프로퍼티로 가진다.
+트라이 노드 객체는 `key`, 부모/자식 노드를 참조하는 `parent`와 `children`, 노드가 문자열의 마지막에 위치해있는가를 나타내는 `end`를 프로퍼티로 가진다.
 
 ```javascript
 class TrieNode {
@@ -86,21 +86,254 @@ insert(word) {
 }
 ```
 
-#### search
+#### contain
 
-`search()`는 트라이안에 단어가 포함되어 있는가를 확인하는 메소드이다.
+`contain()`은 트라이에 해당하는 단어(문자열)가 포함되어있는가를 확인하는 메소드이다.
 
-###### search
+```javascript
+contain(word) {
+  let node = this.root;
 
-###### find
+  for (let i = 0; i < word.length; i++) {
+    // 노드의 자식 노드 중 단어의 문자를 포함하는 노드가 있을 경우
+    if (node.children[word[i]]) {
+      // 그 자식 노드로 이동
+      node = node.children[word[i]];
+    } else {
+      // 존재하지 않을 경우 false 반환
+      return false;
+    }
+  }
+  return node.end;
+}
+```
 
-###### remove
+#### find
 
-###### complete code and example
+`find()`는 해당하는 접두사(prefix)를 포함한 모든 단어를 찾는 메소드이다.
+
+```javascript
+find(prefix) {
+  let node = this.root;
+  let output = [];
+
+  // contain()과 같은 프로세스
+  for (let i = 0; i < prefix.length; i++) {
+    if (node.children[prefix[i]]) {
+      node = node.children[prefix[i]];
+    } else {
+      // 존재하지 않을 경우 빈 객체 반환
+      return output;
+    }
+  }
+
+  findAllWords(node, output);
+  return output;
+}
+
+findAllWords(node, arr) {
+  // 노드가 단어에 존재할 경우 output으로 unshift
+  if (node.end) {
+    arr.unshift(node.getWord());
+  }
+
+  // 자식 노드들에 반복하며 재귀 호출
+  for (let child in node.children) {
+    findAllWords(node.children[child], arr);
+  }
+}
+```
+
+#### remove
+
+`remove()`는 노드 삭제를 위한 메소드이다. 키가 포함된 자식 노드가 존재할 수 있기 때문에 키에 해당하는 노드를 직접적으로 제거하는 것이 아니라 해당 노드를 찾아 값을 `null`로 바꾼다. 그러나 노드에 자식 노드가 존재하지 않거나 자식들의 값이 모두 `null`일 경우 전체 노드를 삭제할 수 있다.
+
+```javascript
+remove(word) {
+  let root = this.root;
+ 
+  if (!word) {
+    return 'It is not a word.';   
+  }
+ 
+  const removeWord = (node, word) => {
+    if (node.end && node.getWord() === word) {
+      let hasChildren = Object.keys(node.children).length > 0;
+
+      if (hasChildren) {
+        node.end = false;
+      } else {
+        node.parent.children = {};
+      }
+
+      return true;
+    }
+
+    for (const key in node.children) {
+      removeWord(node.children[key], word);
+    }
+
+    return true;
+  };
+
+  removeWord(root, word);
+}
+```
+
+<br>
+
+### Complete Code
+
+```javascript
+class TrieNode {
+  constructor(key) {
+    this.key = key;
+    this.parent = null;
+    this.children = {};
+    this.end = false;
+  }
+
+  getWord() {
+    let output = [];
+    let node = this;
+
+    while (node !== null) {
+      output.unshift(node.key);
+      node = node.parent;
+    }
+    return output.join('');
+  }
+}
+
+class Trie {
+  constructor() {
+    this.root = new TrieNode(null);
+  }
+
+  insert(word) {
+    let node = this.root; 
+
+    for (let i = 0; i < word.length; i++) {
+      if (!node.children[word[i]]) {
+        node.children[word[i]] = new TrieNode(word[i]);
+        node.children[word[i]].parent = node;
+      }
+
+      node = node.children[word[i]];
+
+      if (i === word.length - 1) {
+        node.end = true;
+      }
+    }
+  }
+
+  contain(word) {
+    let node = this.root;
+
+    for (let i = 0; i < word.length; i++) {
+     
+      if (node.children[word[i]]) {
+        node = node.children[word[i]];
+      } else {
+        return false;
+      }
+    }
+    return node.end;
+  }
+
+  find(prefix) {
+    let node = this.root;
+    let output = [];
+
+    for (let i = 0; i < prefix.length; i++) {
+      if (node.children[prefix[i]]) {
+        node = node.children[prefix[i]];
+      } else {
+        return output;
+      }
+    }
+
+    const findAllWords = (node, arr) => {
+      if (node.end) {
+        arr.unshift(node.getWord());
+      }
+
+      for (let child in node.children) {
+        findAllWords(node.children[child], arr);
+      }
+    };
+
+    findAllWords(node, output);
+    return output;
+  }
+
+  remove(word) {
+    let root = this.root;
+
+    if (!word) return 'It is not a word.';
+
+    const removeWord = (node, word) => {
+      if (node.end && node.getWord() === word) {
+        let hasChildren = Object.keys(node.children).length > 0;
+
+        if (hasChildren) {
+          node.end = false;
+        } else {
+          node.parent.children = {};
+        }
+
+        return true;
+      }
+
+      for (const key in node.children) {
+        removeWord(node.children[key], word);
+      }
+
+      return true;
+    };
+
+    removeWord(root, word);
+  }
+}
+```
+
+<br>
+
+### Example
+
+```javascript
+const trie = new Trie();
+
+trie.insert('apple');
+trie.insert('application');
+trie.insert('apollo');
+trie.insert('apoptosis');
+
+trie.find('ap'); // #1
+trie.find('app'); // #2
+
+trie.contain('application'); // #3
+
+trie.remove('apple');
+trie.find('app'); // #4
+```
+
+```javascript
+// Output:
+
+["apoptosis", "apollo", "application", "apple"] // #1
+["application", "apple"] // #2
+
+true // #3
+
+["application"] // #4
+```
 
 <br>
 
 <br>
+
+###### NOTE: recheck remove()
 
 ------
 
