@@ -44,7 +44,7 @@
 8. ### Trie
 
    - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/trie.md)
-   - source
+   - [source](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/src/trie.js)
 
 <br>
 

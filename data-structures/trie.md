@@ -1,10 +1,10 @@
 # Trie
 
-트라이(trie)란 문자열을 key로 사용하는 배열이나 동적인 Set을 저장하는 트리 자료 구조이며 디지털 트리(digital tree) 또는 접두사 트리(prefix tree)라고도 부른다. 
+트라이(trie)란 문자열을 key로 사용하는 배열이나 동적 Set을 저장하는 트리 자료 구조이며 디지털 트리(digital tree) 또는 접두사 트리(prefix tree)라고도 부른다. 
 
 ![trie](https://i1.wp.com/learnersbucket.com/wp-content/uploads/2020/12/learnersbucket.com-1-1.png?w=768&ssl=1)
 
-트라이는 데이터를 효율적으로 저장/관리하고 빠르게 검색(retrieval)할 수 있는 장점이 있다. 
+트라이는 데이터를 효율적으로 저장/관리하고 빠르게 검색(re**trie**val)할 수 있는 장점이 있다. 
 
 <br>
 
@@ -13,6 +13,8 @@
 ### Trie Node
 
 트라이 노드 객체는 `key`, 부모/자식 노드를 참조하는 `parent`와 `children`, 노드가 문자열의 마지막에 위치해있는가를 나타내는 `end`를 프로퍼티로 가진다.
+
+`getWord()` 메소드는 해당 단어 즉, 자식 노드의 key부터 부모 노드의 key까지를 unshift한 `output` 배열을 반환하는 메소드이다.
 
 ```javascript
 class TrieNode {
@@ -40,7 +42,7 @@ class TrieNode {
 
 트라이에는 다른 노드를 참조하는 빈 루트 노드가 있다. 여기서 다른 노드란 문자열을 이루고 있는 각 알파벳 값을 포함하고 있는 노드를 의미한다.
 
-트라이는 연결된 노드들로 이루어져 있으며 빈 루트 노드에 연결되는 구조를 가진다.
+트라이는 연결일 이루고 있는 노드들이 빈 루트노드에 연결되는 구조를 가진다.
 
 ```javascript
 class Trie {
@@ -332,8 +334,6 @@ true // #3
 <br>
 
 <br>
-
-###### NOTE: recheck remove()
 
 ------
 
