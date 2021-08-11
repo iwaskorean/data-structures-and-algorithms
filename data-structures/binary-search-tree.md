@@ -34,9 +34,14 @@ class BinarySearchTree {
     this.root = null;
   }
 
-  // insert()
-  // remove()
-  // search()
+  // insert(data)
+  // remove(data)
+
+  // findMinNode(node)
+  // getRootNode()
+  // preorder(node)
+  // inorder(node)
+  // postorder(node)
 }
 ```
 
@@ -88,8 +93,260 @@ insertNode(node, newNode) {
 
 ```javascript
 remove(data) {
-	...
+  this.root = this.removeNode(this.root, data);
 }
+
+removeNode(node, key) {
+  // 루트 노드가 null 일 경우, 비어있는 트리라는 메세지 반환
+  if (node === null) {
+    return 'It is empty tree!';
+  }
+  // 삭제하려는 노드의 data가 상위 노드의 data보다 작은 경우
+  // 상위 노드를 왼쪽 하위 트리로 변경
+  else if (key < node.data) {
+    node.leftChild = this.removeNode(node.leftChild, key);
+    return node;
+  } 
+  // 삭제하려는 노드의 data가 상위 노드의 data보다 큰 경우
+  // 상위 노드를 오른쪽 하위트리로 변경
+  else if (key > node.data) {
+    node.rightChild = this.removeNode(node.rightChild, key);
+    return node;
+  } 
+  // 삭제하려는 노드의 data를 찾았을 때
+  else {
+    // 삭제하려는 노드의 자식 노드가 없을 경우
+    if (node.leftChild === null && node.rightChild === null) {
+      node = null;
+      return node;
+    }
+
+    // 삭제하려는 노드가 오른쪽 자식만을 가지고 있을 경우
+    if (node.leftChild === null) {
+      node = node.rightChild;
+      return node;
+    // 삭제하려는 노드가 왼쪽 자식만을 가지고 있을 경우
+    } else if (node.rightChild === null) {
+      node = node.leftChild;
+      return node;
+    }
+
+    // 삭제하려는 노드가 2개의 자식 노드를 가지고 있을 경우
+    // 삭제하려는 노드의 오른쪽 하위트리에서 최소값을 찾아 대체하고 노드를 삭제
+    const aux = this.findMinNode(node.rightChild);
+    node.data = aux.data;
+    node.rightChild = this.removeNode(node.rightChild, aux.data);
+    return node;
+  }
+}
+
+// 타겟 노드의 왼쪽 자식이 null일 경우
+// 그 노드를 최소값 노드로 판별하는 메소드
+findMinNode(node) {
+  if (node.leftChild === null) {
+    return node;
+  } else {
+    return this.findMinNode(node.leftChild);
+  }
+}
+```
+
+#### getRootNode
+
+`getRootNode()` 메소드는 현재 트리의 루트 노드를 반환하는 메소드이다.
+
+```javascript
+getRootNode()
+{
+  return this.root;
+}
+```
+
+### Traversal
+
+순회에는 전위 순회(preorder traversal), 중위 순회(inorder traversal), 후위 순회(postorder traversal)이 있으며 각 순회가 노드를 탐색하는 순서는 다음과 같다.
+
+- 전위 순회 : 부모 노드 → 왼쪽 자식 노드 → 오른쪽 자식 노드
+- 중위 순회 : 왼쪽 자식 노드 → 부모 노드 → 오른쪽 자식 노드
+- 후위 순회 : 왼쪽 자식 노드 → 오른쪽 자식 노드 → 부모 노드
+
+```javascript
+preorder(node) {
+  if (node !== null) {
+    console.log(node.data);
+    this.preorder(node.leftChild);
+    this.preorder(node.rightChild);
+  }
+}
+
+inorder(node) {
+  if (node !== null) {
+    this.inorder(node.leftChild);
+    console.log(node.data);
+    this.inorder(node.rightChild);
+  }
+}
+
+postorder(node) {
+  if (node !== null) {
+    this.postorder(node.leftChild);
+    this.postorder(node.rightChild);
+    console.log(node.data);
+  }
+}
+```
+
+<br>
+
+### Complete Code
+
+```javascript
+class Node {
+  constructor(data) {
+    this.data = data;
+    this.leftChild = null;
+    this.rightChild = null;
+  }
+}
+
+class BinarySearchTree {
+  constructor() {
+    this.root = null;
+  }
+
+  insert(data) {
+    let node = new Node(data);
+
+    if (this.root === null) {
+      this.root = node;
+    } else {
+      this.insertNode(this.root, node);
+    }
+  }
+
+  insertNode(node, newNode) {
+    if (node.data > newNode.data) {
+      if (node.leftChild === null) {
+        node.leftChild = newNode;
+      } else {
+        this.insertNode(node.leftChild, newNode);
+      }
+    } else {
+      if (node.rightChild === null) {
+        node.rightChild = newNode;
+      } else {
+        this.insertNode(node.rightChild, newNode);
+      }
+    }
+  }
+
+  remove(data) {
+    this.root = this.removeNode(this.root, data);
+  }
+
+  removeNode(node, key) {
+    if (node === null) {
+      return 'It is empty tree!';
+    } else if (key < node.data) {
+      node.leftChild = this.removeNode(node.leftChild, key);
+      return node;
+    } else if (key > node.data) {
+      node.rightChild = this.removeNode(node.rightChild, key);
+      return node;
+    } else {
+      if (node.leftChild === null && node.rightChild === null) {
+        node = null;
+        return node;
+      }
+
+      if (node.leftChild === null) {
+        node = node.rightChild;
+        return node;
+      } else if (node.rightChild === null) {
+        node = node.leftChild;
+        return node;
+      }
+
+      const aux = this.findMinNode(node.rightChild);
+      node.data = aux.data;
+
+      node.rightChild = this.removeNode(node.rightChild, aux.data);
+      return node;
+    }
+  }
+
+  findMinNode(node) {
+    if (node.leftChild === null) {
+      return node;
+    } else {
+      return this.findMinNode(node.leftChild);
+    }
+  }
+
+  getRootNode() {
+    return this.root;
+  }
+
+  preorder(node) {
+    if (node !== null) {
+      console.log(node.data);
+      this.preorder(node.leftChild);
+      this.preorder(node.rightChild);
+    }
+  }
+
+  inorder(node) {
+    if (node !== null) {
+      this.inorder(node.leftChild);
+      console.log(node.data);
+      this.inorder(node.rightChild);
+    }
+  }
+
+  postorder(node) {
+    if (node !== null) {
+      this.postorder(node.leftChild);
+      this.postorder(node.rightChild);
+      console.log(node.data);
+    }
+  }
+}
+```
+
+<br>
+
+### Example
+
+```javascript
+const bst = new BinarySearchTree();
+
+bst.insert(22);
+bst.insert(10);
+bst.insert(40);
+bst.insert(5);
+bst.insert(15);
+bst.insert(50);
+bst.insert(39);
+
+const root = bst.getRootNode();
+
+bst.preorder(root); // #1
+
+bst.remove(39);
+bst.inorder(root); // #2
+
+bst.remove(10);
+bst.postorder(root) // #3
+```
+
+```javascript
+// console
+
+22 10 5 15 40 39 50 // #1. 전위 순회
+
+5 10 15 22 40 50 // #2. 39 삭제 후, 중위 순회
+
+5 15 50 40 22 // #3. 10 삭제 후, 후위 순회
 ```
 
 <br>

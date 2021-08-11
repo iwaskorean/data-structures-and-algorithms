@@ -49,7 +49,7 @@
 9. ### Binary Search Tree
 
    - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/binary-search-tree.md)
-   - source
+   - [source](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/src/binary-search-tree.js)
 
 <br>
 
