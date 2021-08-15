@@ -50,6 +50,11 @@
 
    - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/binary-search-tree.md)
    - [source](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/src/binary-search-tree.js)
+   
+10. ### AVL Tree
+
+    - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/avl-tree.md)
+    - source
 
 <br>
 
