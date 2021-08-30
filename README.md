@@ -54,7 +54,7 @@
 10. ### AVL Tree
 
     - [markdown](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/avl-tree.md)
-    - source
+    - [source](https://github.com/SewookHan/data-structures-and-algorithms/blob/main/data-structures/src/avl-tree.js)
 
 <br>
 

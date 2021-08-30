@@ -1,6 +1,6 @@
 # AVL Tree(Adelson-Velsky and Landis Tree)
 
-일반적인 이진 탐색 트리는 검색/삽입/삭제 연산에서 시간 복잡도에서 O(log N)이지만 한 쪽으로 편향된 형태의 이진 탐색 트리에서의 연산은 O(N)의 시간 복잡도를 가진다. 이러한 문제점을 극복하기 위해 개발된 것이 AVL 트리이다.
+일반적인 이진 탐색 트리는 검색/삽입/삭제 연산에서 시간 복잡도가 O(log N)이지만 한 쪽으로 편향된 형태의 이진 탐색 트리에서의 연산은 O(N)의 시간 복잡도를 가진다. 이러한 문제점을 극복하기 위해 개발된 것이 AVL 트리이다.
 
 AVL 트리는 N개의 노드를 가진 트리의 높이를 항상 O(log N)으로 유지하는 균형 유지(self-balancing) 이진 탐색 트리이다. AVL 트리에서의 연산은 항상 O(log N)의 시간 복잡도를 보장한다.
 
@@ -112,9 +112,532 @@ right-left rotation은 오른쪽 자식 노드에 왼쪽 하위 트리만 존재
 
 ## Implementation of AVL Tree
 
-###### ...
+### Node
 
+```javascript
+class Node {
+  constructor(item) {
+    this.item = item;
+    this.height = 1;
+    this.leftChild = null;
+    this.rightChild = null;
+  }
+}
+```
 
+### AVL Tree
+
+```javascript
+class AVLTree {
+  constructor() {
+    this.root = null;
+  }
+  
+  // getHeight(node) 
+  // getBalanceFactor(node) 
+  // rightRotate(y) 
+  // leftRotate(x) 
+  // insert(item) 
+  // nodeWithMimumValue(node) 
+  // delete(item) 
+  // preorder() 
+  // inorder() 
+  // postorder() 
+  
+}
+```
+
+#### getHeight
+
+`getHeight()`는 노드의 높이를 반환하는 메소드이다.
+
+```javascript
+getHeight(node) {
+  if (node === null) {
+    return 0;
+  }
+
+  return node.height;
+}
+```
+
+#### getBalanceFactor
+
+`getBalanceFactor()`는 노드의 균형 인수를 반환하는 메소드이다.
+
+```javascript
+getBalanceFactor(node) {
+  if (node == null) {
+    return 0;
+  }
+
+  return this.getHeight(node.leftChild) - this.getHeight(node.rightChild);
+}	
+```
+
+#### Rotation
+
+```javascript
+rightRotate(y) {
+  // X를 Y의 왼쪽 자식으로, X의 오른쪽 자식을 T2로 변경한다.
+  let x = y.leftChild;
+  let T2 = x.rightChild;
+  x.rightChild = y;
+  y.leftChild = T2;
+  
+  // height 업데이트
+  y.height =
+    Math.max(this.getHeight(y.leftChild), this.getHeight(y.rightChild)) + 1;
+  x.height =
+    Math.max(this.getHeight(x.leftChild), this.getHeight(x.rightChild)) + 1;
+
+  // X가 새로운 루트 노드가 된다.
+  return x;
+}
+
+leftRotate(x) {
+  // y를 X의 오른쪽 자식으로, X의 오른쪽 자식을 T2로 변경한다.
+  let y = x.rightChild;
+  let T2 = y.leftChild;
+  y.leftChild = x;
+  x.rightChild = T2;
+
+  // height 업데이트
+  x.height =
+    Math.max(this.getHeight(x.leftChild), this.getHeight(x.rightChild)) + 1;
+  y.height =
+    Math.max(this.getHeight(y.leftChild), this.getHeight(y.rightChild)) + 1;
+  return y;
+}
+```
+
+#### insert
+
+`insert()`는 노드를 삽입하는 메소드이다.
+
+```javascript
+insert(item) {
+  this.root = this.insertNodeHelper(this.root, item);
+}
+
+insertNodeHelper(node, item) {
+  // 삽입하려는 위치를 찾아 노드를 삽입한다.
+  if (node === null) {
+    return new Node(item);
+  }
+  if (item < node.item) {
+    node.leftChild = this.insertNodeHelper(node.leftChild, item);
+  } else if (item > node.item) {
+    node.rightChild = this.insertNodeHelper(node.rightChild, item);
+  } else {
+    return node;
+  }
+
+  // 각 노드의 균형 인수를 업데이트한다.
+  node.height =
+    1 +
+    Math.max(this.getHeight(node.leftChild), this.getHeight(node.rightChild));
+
+  let balanceFactor = this.getBalanceFactor(node);
+
+  // 노드의 균형 인수가 1보다 큰 경우
+  if (balanceFactor > 1) {
+    // 노드가 왼쪽 자식 노드보다 작은 경우 right rotation
+    if (item < node.leftChild.item) {
+      return this.rightRotate(node);
+
+      // 노드가 왼쪽 자식 노드보다 작은 경우
+      // 왼쪽 자식 노드를 left rotation 한 후 right rotation
+    } else if (item > node.leftChild.item) {
+      node.leftChild = this.leftRotate(node.leftChild);
+      return this.rightRotate(node);
+    }
+  }
+
+  // 노드의 균형 인수가 -1보다 작은 경우
+  if (balanceFactor < -1) {
+    // 노드가 오른쪽 자식보다 큰 경우 right rotation
+    if (item > node.rightChild.item) {
+      return this.leftRotate(node);
+
+      // 노드가 오른쪽 자식 노드보다 작은 경우
+      // 오른쪽 자식을 right rotation 한 후 left rotation
+    } else if (item < node.rightChild.item) {
+      node.rightChild = this.rightRotate(node.rightChild);
+      return this.leftRotate(node);
+    }
+  }
+
+  return node;
+}
+```
+
+#### delete
+
+`delete()`는 노드를 삭제하는 메소드이다.
+
+```javascript
+delete(item) {
+  this.root = this.deleteNodeHelper(this.root, item);
+}
+
+deleteNodeHelper(root, item) {
+  // 대상이 되는 노드를 찾아 삭제
+  if (root == null) {
+    return root;
+  }
+  if (item < root.item) {
+    root.leftChild = this.deleteNodeHelper(root.leftChild, item);
+  } else if (item > root.item) {
+    root.rightChild = this.deleteNodeHelper(root.rightChild, item);
+  } else {
+    if (root.leftChild === null || root.rightChild === null) {
+      let temp = null;
+
+      if (temp == root.leftChild) {
+        temp = root.rightChild;
+      } else {
+        temp = root.leftChild;
+      }
+
+      if (temp == null) {
+        temp = root;
+        root = null;
+      } else {
+        root = temp;
+      }
+    } else {
+      let temp = this.nodeWithMimumValue(root.rightChild);
+      root.item = temp.item;
+      root.rightChild = this.deleteNodeHelper(root.rightChild, temp.item);
+    }
+  }
+  if (root == null) {
+    return root;
+  }
+
+  // 균형 인수 업데이트
+  root.height =
+    Math.max(
+      this.getHeight(root.leftChild),
+      this.getHeight(root.rightChild)
+    ) + 1;
+
+  let balanceFactor = this.getBalanceFactor(root);
+
+  // 노드의 균형 인수가 1보다 큰 경우
+  if (balanceFactor > 1) {
+    // 노드의 왼쪽 자식 노드의 균형 인수가 0 이상일 경우 right rotation
+    if (this.getBalanceFactor(root.leftChild) >= 0) {
+      return this.rightRotate(root);
+
+      // 노드의 왼쪽 자식 노드의 균형 인수가 0 보다 작은 경우
+      // 왼쪽 자식 노드 left rotation 후 right rotation
+    } else {
+      root.leftChild = this.leftRotate(root.leftChild);
+      return this.rightRotate(root);
+    }
+  }
+
+  // 노드의 균형 인수가 -1보다 작은 경우
+  if (balanceFactor < -1) {
+    // 노드의 오른쪽 자식 노드의 균형 인수가 0 이하일 경우 left rotation
+    if (this.getBalanceFactor(root.rightChild) <= 0) {
+      return this.leftRotate(root);
+
+      // 노드의 오른쪽 자식 노드의 균형 인수가 0 보다 큰 경우
+      // 오른쪽 자식 노드를 right rotation 한 후 left rotation
+    } else {
+      root.rightChild = this.rightRotate(root.rightChild);
+      return this.leftRotate(root);
+    }
+  }
+
+  return root;
+}
+```
+
+### Traversal
+
+`preorder()`,  `inorder()`는 전위 순회, 중위 순회로 트리를 순회하는 메소드이다.
+
+```javascript
+// 전위 순회
+preorder() {
+  this.preorderHelper(this.root);
+}
+preorderHelper(node) {
+  if (node) {
+    console.log(node.item);
+    this.preorderHelper(node.leftChild);
+    this.preorderHelper(node.rightChild);
+  }
+}
+
+// 중위 순회
+inorder() {
+  this.inorderHelper(this.root);
+}
+inorderHelper(node) {
+  if (node) {
+    this.inorderHelper(node.leftChild);
+    console.log(node.item);
+    this.inorderHelper(node.rightChild);
+  }
+}
+```
+
+###### Note: add postorder
+
+<br>
+
+### Complete Code
+
+```javascript
+class Node {
+  constructor(item) {
+    this.item = item;
+    this.height = 1;
+    this.leftChild = null;
+    this.rightChild = null;
+  }
+}
+
+class AVLTree {
+  constructor() {
+    this.root = null;
+  }
+
+  getHeight(node) {
+    if (node === null) {
+      return 0;
+    }
+
+    return node.height;
+  }
+
+  getBalanceFactor(node) {
+    if (node == null) {
+      return 0;
+    }
+
+    return this.getHeight(node.leftChild) - this.getHeight(node.rightChild);
+  }
+
+  rightRotate(y) {
+    let x = y.leftChild;
+    let T2 = x.rightChild;
+    x.rightChild = y;
+    y.leftChild = T2;
+
+    y.height =
+      Math.max(this.getHeight(y.leftChild), this.getHeight(y.rightChild)) + 1;
+    x.height =
+      Math.max(this.getHeight(x.leftChild), this.getHeight(x.rightChild)) + 1;
+
+    return x;
+  }
+
+  leftRotate(x) {
+    let y = x.rightChild;
+    let T2 = y.leftChild;
+    y.leftChild = x;
+    x.rightChild = T2;
+
+    x.height =
+      Math.max(this.getHeight(x.leftChild), this.getHeight(x.rightChild)) + 1;
+    y.height =
+      Math.max(this.getHeight(y.leftChild), this.getHeight(y.rightChild)) + 1;
+    return y;
+  }
+
+  insert(item) {
+    this.root = this.insertNodeHelper(this.root, item);
+  }
+
+  insertNodeHelper(node, item) {
+    if (node === null) {
+      return new Node(item);
+    }
+    if (item < node.item) {
+      node.leftChild = this.insertNodeHelper(node.leftChild, item);
+    } else if (item > node.item) {
+      node.rightChild = this.insertNodeHelper(node.rightChild, item);
+    } else {
+      return node;
+    }
+
+    node.height =
+      1 +
+      Math.max(this.getHeight(node.leftChild), this.getHeight(node.rightChild));
+
+    let balanceFactor = this.getBalanceFactor(node);
+
+    if (balanceFactor > 1) {
+      if (item < node.leftChild.item) {
+        return this.rightRotate(node);
+      } else if (item > node.leftChild.item) {
+        node.leftChild = this.leftRotate(node.leftChild);
+        return this.rightRotate(node);
+      }
+    }
+
+    if (balanceFactor < -1) {
+      if (item > node.rightChild.item) {
+        return this.leftRotate(node);
+      } else if (item < node.rightChild.item) {
+        node.rightChild = this.rightRotate(node.rightChild);
+        return this.leftRotate(node);
+      }
+    }
+
+    return node;
+  }
+
+  nodeWithMimumValue(node) {
+    let current = node;
+    while (current.leftChild !== null) {
+      current = current.leftChild;
+    }
+
+    return current;
+  }
+
+  delete(item) {
+    this.root = this.deleteNodeHelper(this.root, item);
+  }
+
+  deleteNodeHelper(root, item) {
+    if (root == null) {
+      return root;
+    }
+    if (item < root.item) {
+      root.leftChild = this.deleteNodeHelper(root.leftChild, item);
+    } else if (item > root.item) {
+      root.rightChild = this.deleteNodeHelper(root.rightChild, item);
+    } else {
+      if (root.leftChild === null || root.rightChild === null) {
+        let temp = null;
+
+        if (temp == root.leftChild) {
+          temp = root.rightChild;
+        } else {
+          temp = root.leftChild;
+        }
+
+        if (temp == null) {
+          temp = root;
+          root = null;
+        } else {
+          root = temp;
+        }
+      } else {
+        let temp = this.nodeWithMimumValue(root.rightChild);
+        root.item = temp.item;
+        root.rightChild = this.deleteNodeHelper(root.rightChild, temp.item);
+      }
+    }
+    if (root == null) {
+      return root;
+    }
+
+    root.height =
+      Math.max(
+        this.getHeight(root.leftChild),
+        this.getHeight(root.rightChild)
+      ) + 1;
+
+    let balanceFactor = this.getBalanceFactor(root);
+
+    if (balanceFactor > 1) {
+      if (this.getBalanceFactor(root.leftChild) >= 0) {
+        return this.rightRotate(root);
+      } else {
+        root.leftChild = this.leftRotate(root.leftChild);
+        return this.rightRotate(root);
+      }
+    }
+
+    if (balanceFactor < -1) {
+      if (this.getBalanceFactor(root.rightChild) <= 0) {
+        return this.leftRotate(root);
+      } else {
+        root.rightChild = this.rightRotate(root.rightChild);
+        return this.leftRotate(root);
+      }
+    }
+
+    return root;
+  }
+
+  preorder() {
+    this.preorderHelper(this.root);
+  }
+  preorderHelper(node) {
+    if (node) {
+      console.log(node.item);
+      this.preorderHelper(node.leftChild);
+      this.preorderHelper(node.rightChild);
+    }
+  }
+
+  inorder() {
+    this.inorderHelper(this.root);
+  }
+  inorderHelper(node) {
+    if (node) {
+      this.inorderHelper(node.leftChild);
+      console.log(node.item);
+      this.inorderHelper(node.rightChild);
+    }
+  }
+}
+```
+
+<br>
+
+### Example
+
+```javascript
+const t = new AVLTree();
+t.insert(20);
+t.insert(5);
+t.insert(22);
+t.insert(30);
+t.insert(100);
+t.insert(70);
+t.insert(88);
+
+console.log('preorder : ');
+t.preorder();
+
+t.delete(88);
+
+console.log('After deletion 88');
+console.log('preorder : ');
+t.preorder();
+```
+
+```javascript
+// output: 
+preorder : 
+30
+20
+5
+22
+88
+70
+100
+
+After deletion 88
+preorder : 
+30
+20
+5
+22
+100
+70
+```
 
 <br>
 
