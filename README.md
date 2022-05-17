@@ -70,3 +70,7 @@
 - [Lv1](algorithm/programmers-lv1)
 - [Lv2](algorithm/programmers-lv2)
 - [Lv3](algorithm/programmers-lv3)
+
+### HackerRank
+
+- [Problem Solving (Intermediate)](algorithm/hackerrank-intermediate)
