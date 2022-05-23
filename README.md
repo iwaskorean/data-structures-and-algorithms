@@ -73,4 +73,4 @@
 
 ### HackerRank
 
-- [Problem Solving (Intermediate)](algorithm/hackerrank-intermediate)
+- [Problem Solving(Intermediate)](algorithm/hackerrank-intermediate)
