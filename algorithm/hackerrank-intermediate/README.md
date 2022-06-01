@@ -5,3 +5,4 @@
 - Almost Sorted
 - Common Child
 - Sherlock And Cost
+- Chief Hopper
