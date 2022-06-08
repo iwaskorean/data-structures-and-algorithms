@@ -73,4 +73,6 @@
 
 ### HackerRank
 
+- [Problem Solving(Easy)](algorithm/hackerrank-easy)
 - [Problem Solving(Intermediate)](algorithm/hackerrank-intermediate)
+- [Problem Solving(Advanced)](algorithm/hackerrank-advanced)
