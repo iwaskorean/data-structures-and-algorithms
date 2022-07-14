@@ -1,5 +1,5 @@
 # HackerRank Solutions
 
-## Problem Solving (Easy)
+## Problem Solving (Basic)
 
 - Largest Permutation
